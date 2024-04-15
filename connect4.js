@@ -97,7 +97,6 @@ class Game {
   
     const spot = document.getElementById(`${y}-${x}`);
     spot.append(piece);
-    console.log(this.board);
   }
 
   endGame(msg) {
@@ -138,9 +137,26 @@ class Game {
   }
 }
 
+class Player {
+  constructor(color) {
+    this.color = color;
+  }
+}
+
 document.getElementById('start').addEventListener('click', startGame)
 
 function startGame(){
-  new Game();
-  document.getElementById('start').removeEventListener('click', startGame);
+  let p1 = document.getElementById('p1').value.trim().toLowerCase();
+  let p2 = document.getElementById('p2').value.trim().toLowerCase();
+  if(p1 === p2) {
+    document.getElementById('p2').value = '';
+    document.getElementById('p1').value = '';
+  } else {
+    let player1 = new Player(p1);
+    let player2 = new Player(p2);
+    new Game(player1,player2);
+    document.getElementById('p2').value = '';
+    document.getElementById('p1').value = '';
+    document.getElementById('start').removeEventListener('click', startGame);
+  }
 }
